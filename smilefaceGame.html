@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+<style>
+img{
+	position:absolute;
+	width:50px;
+	height:50px;
+}
+body div{
+	width:501px;
+	height:500px;
+	position:absolute;
+}
+#rightside{
+	 left: 500px; 
+     border-left: 1px solid black;
+}
+</style>
+<script>
+var numberOfFaces=5; 
+var theLeftSide=document.getElementById("leftSide");
+var therightSide=document.getElementById("rightSide");
+function gne(){
+	for(var i=0;i<numberOfFaces;i++)
+	{
+		var image=document.createElement('img');
+		image.setAttribute("src","https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Day-template.svg/200px-Day-template.svg.png");
+		image.setAttribute('id','elem'+i);
+		document.getElementById("leftside").appendChild(image);
+		var left=Math.random()*450;
+		left=Math.floor(left);
+		var top=Math.random()*450;
+		top=Math.floor(top);
+		document.getElementById('elem'+i).style.left=left+'px';
+		document.getElementById('elem'+i).style.top=top+'px';
+	}
+	for(var j=0;j<numberOfFaces;j++)
+	{
+		var copy=document.getElementById("elem"+j);
+		var cimage=copy.cloneNode(true);
+		document.getElementById("rightside").appendChild(cimage);
+	}
+	image=document.createElement('img');
+		image.setAttribute("src","https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Day-template.svg/200px-Day-template.svg.png");
+		image.setAttribute('id','elem');
+		document.getElementById("leftside").appendChild(image);
+		var left=Math.random()*450;
+		left=Math.floor(left);
+		var top=Math.random()*450;
+		top=Math.floor(top);
+		document.getElementById('elem').style.left=left+'px';
+		document.getElementById('elem').style.top=top+'px';
+
+		
+		var body=document.getElementsByTagName('body')[0];
+		if(document.getElementById("leftside").lastChild != null)
+		{
+		document.getElementById("leftside").lastChild.onclick= function nextLevel(event){
+        event.stopPropagation();
+        numberOfFaces += 5;
+		var lf=document.getElementById('leftside');
+			while (lf.firstChild) 
+            {        
+			lf.removeChild(lf.firstChild);
+            }
+			var rf=document.getElementById('rightside');
+			while (rf.firstChild) 
+            {        
+			rf.removeChild(rf.firstChild);
+            }
+			gne();
+		};
+		}
+		if(document.getElementById("leftside").lastChild==null)
+		{
+			image=document.createElement('img');
+		image.setAttribute("src","https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Day-template.svg/200px-Day-template.svg.png");
+		image.setAttribute('id','elem');
+		document.getElementById("leftside").appendChild(image);
+		var left=Math.random()*450;
+		left=Math.floor(left);
+		var top=Math.random()*450;
+		top=Math.floor(top);
+		document.getElementById('elem').style.left=left+'px';
+		document.getElementById('elem').style.top=top+'px';
+		document.getElementById("leftside").lastChild.onclick= function nextLevel(event){
+        event.stopPropagation();
+        numberOfFaces += 5;
+		var lf=document.getElementById('leftside');
+			while (lf.firstChild) 
+            {        
+			lf.removeChild(lf.firstChild);
+            }
+			var rf=document.getElementById('rightside');
+			while (rf.firstChild) 
+            {        
+			rf.removeChild(rf.firstChild);
+			}
+        gne();
+		};
+		}
+	body.onclick = function gameOver() {
+    alert("Game Over!");
+    body.onclick = NULL;
+    theLeftSide.lastChild.onclick = NULL;
+	}; 
+}
+</script>
+</head>
+<body onLoad="gne()">
+<h2>Matching Game</h2>
+<p>Click on the extra smiling face on the left.</p>
+<div id="leftside"></div>
+<div id="rightside"></div>
+</body>
+</html>
